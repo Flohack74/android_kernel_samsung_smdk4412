@@ -64,13 +64,13 @@ struct s3c_platform_fb *to_fb_plat(struct device *dev)
 	return (struct s3c_platform_fb *)pdev->dev.platform_data;
 }
 
-#ifndef CONFIG_FRAMEBUFFER_CONSOLE
-#define LPDDR1_BASE_ADDR		0x50000000
-#define BOOT_FB_BASE_ADDR		(LPDDR1_BASE_ADDR   + 0x0EC00000)	/* 0x5EC00000 from Bootloader */
-
 static unsigned int bootloaderfb;
 module_param_named(bootloaderfb, bootloaderfb, uint, 0444);
 MODULE_PARM_DESC(bootloaderfb, "Address of booting logo image in Bootloader");
+
+#ifndef CONFIG_FRAMEBUFFER_CONSOLE
+#define LPDDR1_BASE_ADDR		0x50000000
+#define BOOT_FB_BASE_ADDR		(LPDDR1_BASE_ADDR   + 0x0EC00000)	/* 0x5EC00000 from Bootloader */
 
 int s3cfb_draw_logo(struct fb_info *fb)
 {
