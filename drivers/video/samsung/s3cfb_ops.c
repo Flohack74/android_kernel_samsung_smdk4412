@@ -68,10 +68,6 @@ struct s3c_platform_fb *to_fb_plat(struct device *dev)
 #define LPDDR1_BASE_ADDR		0x50000000
 #define BOOT_FB_BASE_ADDR		(LPDDR1_BASE_ADDR   + 0x0EC00000)	/* 0x5EC00000 from Bootloader */
 
-static unsigned int bootloaderfb;
-module_param_named(bootloaderfb, bootloaderfb, uint, 0444);
-MODULE_PARM_DESC(bootloaderfb, "Address of booting logo image in Bootloader");
-
 int s3cfb_draw_logo(struct fb_info *fb)
 {
 #ifdef CONFIG_FB_S5P_SPLASH_SCREEN
@@ -131,6 +127,10 @@ int s3cfb_draw_logo(struct fb_info *fb)
 	return 0;
 }
 #else
+static unsigned int bootloaderfb;
+module_param_named(bootloaderfb, bootloaderfb, uint, 0444);
+MODULE_PARM_DESC(bootloaderfb, "Address of booting logo image in Bootloader");
+
 int fb_is_primary_device(struct fb_info *fb)
 {
 	struct s3cfb_window *win = fb->par;
